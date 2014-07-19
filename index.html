@@ -1,51 +1,94 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Minimal River.js Feed Reader</title>
+        <title>Smallish River.js Feed Reader</title>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h1>Smallish River.js Feed Reader</h1>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">This is water</div>
+                        <ul id="river" class="list-group">
+                            <li class="list-group-item">Waiting for feeds to load...</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script src="http://fargo.io/code/jquery-1.9.1.min.js"></script>
         <script>
-            if (typeof jQuery === 'undefined') throw "jQuery Required";
-            /**
-             * printf function
-             * @link http://stackoverflow.com/questions/610406/javascript-equivalent-to-printf-string-format
-             */
             if (!String.format) {
-              String.format = function(format) {
-                var args = Array.prototype.slice.call(arguments, 1);
-                return format.replace(/{(\d+)}/g, function(match, number) { 
-                  return typeof args[number] != 'undefined'
-                    ? args[number] 
-                    : match
-                  ;
-                });
-              };
+                /**
+                 * printf function
+                 * @link http://stackoverflow.com/questions/610406/javascript-equivalent-to-printf-string-format
+                 * 
+                 * @param {string} format String with replacable parameters
+                 * @returns {string} formatted string
+                 */
+                String.format = function(format) {
+                    var args = Array.prototype.slice.call(arguments, 1);
+                    return format.replace(/{(\d+)}/g, function(match, number) { 
+                        return typeof args[number] != 'undefined'
+                        ? args[number] 
+                        : match
+                        ;
+                    });
+                };
             }
-            var theRiver;
+            
+            /**
+             * rivers.js callback function
+             * 
+             * @param {object} updatedFeeds JSON object
+             * 
+             * @link http://riverjs.org/
+             */
             function onGetRiverStream (updatedFeeds) {
-                theRiver = updatedFeeds;
-                displayFeeds();
+                river.init(updatedFeeds);
             }
-            function displayFeeds() {
-                var feedText = '';
-                for (var feed in theRiver.updatedFeeds.updatedFeed) {
-                    feedText += String.format(
-                        "\
-                        <li class='list-group-item'>\n\
-                            <div><strong><a href='{0}'>{1}</a></strong></div>\n\
-                            <div><a href='{2}'>{3}</a></div>\n\
-                            <p>{4}</p>\n\
-                        </li>\n\
-                        ", 
-                        theRiver.updatedFeeds.updatedFeed[feed].feedUrl, 
-                        theRiver.updatedFeeds.updatedFeed[feed].feedTitle,
-                        theRiver.updatedFeeds.updatedFeed[feed].item[0].link,
-                        theRiver.updatedFeeds.updatedFeed[feed].item[0].title,
-                        theRiver.updatedFeeds.updatedFeed[feed].item[0].body
-                    );
+            
+            /**
+             * Hierarchical river object
+             *
+             * @type object
+             * @link http://www.dustindiaz.com/json-for-the-masses/ Functional vs Classy section
+             */
+            var river = {
+                feed : '',
+                html : '',
+                element : '',
+                init : function(data) {
+                    this.feed = data;
+                    this.element = document.getElementById('river');
+                    this.display();
+                },
+                display : function() {
+                    for (var i in this.feed.updatedFeeds.updatedFeed) {
+                        this.html += String.format(
+                            "\
+                            <li class='list-group-item'>\n\
+                                <div><strong><a href='{0}'>{1}</a></strong></div>\n\
+                                <div><a href='{2}'>{3}</a></div>\n\
+                                <p>{4}</p>\n\
+                            </li>\n\
+                            ", 
+                            this.feed.updatedFeeds.updatedFeed[i].feedUrl, 
+                            this.feed.updatedFeeds.updatedFeed[i].feedTitle,
+                            this.feed.updatedFeeds.updatedFeed[i].item[0].link,
+                            this.feed.updatedFeeds.updatedFeed[i].item[0].title,
+                            this.feed.updatedFeeds.updatedFeed[i].item[0].body
+                        );
+                    }
+                    this.element.innerHTML = this.html;
                 }
-                document.getElementById('demo').innerHTML = feedText; 
-            }
+                
+            };
+            
+            if (typeof jQuery === 'undefined') throw "jQuery Required";
+            
             /**
              * DOM ready execution
              *
@@ -60,20 +103,5 @@
                 });
             });
         </script>
-    </head>
-    <body>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <h1>Minimal River.js Feed Reader</h1>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Rivers</div>
-                        <ul id="demo" class="list-group">
-                            <li class="list-group-item">Waiting for feeds to load...</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
     </body>
 </html>

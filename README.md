@@ -1,26 +1,22 @@
-README.md
+Minimal River.js Feed Reader
 =========
 
-Overview
---------
+This is an sample application for reading feeds in the [River.js](http://riverjs.org/) format.
 
-This is an sample application for reading feeds in the River.js format. I will be adding more to this later, but this is a start.
+Thanks to Dave Winer and Andy Sylvester for their sample code that got me started!
 
-Thanks to Dave Winer for his sample code that got me started!
+I've added some Twitter Bootstrap styling to give it a Twitter feel and objectifed the JavaScript.
 
-You can see the app running at http://andysylvester.com/files/reader/
+See the app running: <http://rivers.ianchanning.com>
 
-This <a href="http://andysylvester.com/2014/07/14/minimal-river-js-reader/">blog post</a> also talks about the app.
+[Andy's blog post](http://andysylvester.com/2014/07/14/minimal-river-js-reader/) also talks about the app.
 
 Credits
 -------
 
-https://gist.github.com/scripting/75de472d0e3ccf183448 - Dave Winer starter code
-
-http://iviewsource.com/codingtutorials/getting-started-with-javascript-object-notation-json-for-absolute-beginners/ - JSON tutorial
-
-http://www.w3schools.com/json/json_eval.asp - Using JSON objects   
-
-http://api.jquery.com/jQuery.ajax/ - jQuery docs for the .ajax request handler
-
-http://riverjs.org/ - Website for river.js format
+1. [Dave Winer starter gist](https://gist.github.com/scripting/75de472d0e3ccf183448)
+1. [JSON tutorial](http://iviewsource.com/codingtutorials/getting-started-with-javascript-object-notation-json-for-absolute-beginners/)
+1. [Using JSON objects](http://www.w3schools.com/json/json_eval.asp)
+1. [jQuery docs for the .ajax request handler](http://api.jquery.com/jQuery.ajax/)
+1. [Website for river.js format](http://riverjs.org/)
+1. [Functional vs Classy JavaScript](http://www.dustindiaz.com/json-for-the-masses/)

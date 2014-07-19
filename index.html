@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Smallish River.js Feed Reader</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     </head>
     <body>
@@ -11,9 +15,12 @@
                     <h1>Smallish River.js Feed Reader</h1>
                     <div class="panel panel-default">
                         <div class="panel-heading">This is water</div>
-                        <ul id="river" class="list-group">
-                            <li class="list-group-item">Waiting for feeds to load...</li>
-                        </ul>
+                        <div id="river" class="list-group">
+                            <a href="#" class="list-group-item">
+                                <h4 class="list-group-item-heading">Waiting for feeds to load</h4>
+                                <p class="list-group-item-text">...</p>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -47,16 +54,16 @@
              * @link http://riverjs.org/
              */
             function onGetRiverStream (updatedFeeds) {
-                river.init(updatedFeeds);
+                theRiver.init(updatedFeeds);
             }
             
             /**
-             * Hierarchical river object
+             * Hierarchical theRiver object
              *
              * @type object
              * @link http://www.dustindiaz.com/json-for-the-masses/ Functional vs Classy section
              */
-            var river = {
+            var theRiver = {
                 feed : '',
                 html : '',
                 element : '',
@@ -69,16 +76,15 @@
                     for (var i in this.feed.updatedFeeds.updatedFeed) {
                         this.html += String.format(
                             "\
-                            <li class='list-group-item'>\n\
-                                <div><strong><a href='{0}'>{1}</a></strong></div>\n\
-                                <div><a href='{2}'>{3}</a></div>\n\
-                                <p>{4}</p>\n\
-                            </li>\n\
+                            <a href='{0}' class='list-group-item'>\n\
+                                <h4 class='list-group-item-heading'>{1} <small>&ndash; {2}</small></h4>\n\
+                                <p class='list-group-item-text'>{3}</p>\n\
+                            </a>\n\
                             ", 
-                            this.feed.updatedFeeds.updatedFeed[i].feedUrl, 
-                            this.feed.updatedFeeds.updatedFeed[i].feedTitle,
+                            // this.feed.updatedFeeds.updatedFeed[i].feedUrl, 
                             this.feed.updatedFeeds.updatedFeed[i].item[0].link,
                             this.feed.updatedFeeds.updatedFeed[i].item[0].title,
+                            this.feed.updatedFeeds.updatedFeed[i].feedTitle,
                             this.feed.updatedFeeds.updatedFeed[i].item[0].body
                         );
                     }

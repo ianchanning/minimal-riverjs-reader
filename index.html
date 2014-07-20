@@ -30,7 +30,10 @@
             if (!String.format) {
                 /**
                  * printf function
+                 * 
                  * @link http://stackoverflow.com/questions/610406/javascript-equivalent-to-printf-string-format
+                 * @link https://gist.github.com/ianchanning/dcb55d1685679e26e8c8 
+                 * @example var fullName = String.format('{0} {1}', firstName, lastName);
                  * 
                  * @param {string} format String with replacable parameters
                  * @returns {string} formatted string
@@ -38,10 +41,7 @@
                 String.format = function(format) {
                     var args = Array.prototype.slice.call(arguments, 1);
                     return format.replace(/{(\d+)}/g, function(match, number) { 
-                        return typeof args[number] != 'undefined'
-                        ? args[number] 
-                        : match
-                        ;
+                        return typeof args[number] != 'undefined' ? args[number] : match;
                     });
                 };
             }
